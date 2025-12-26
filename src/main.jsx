@@ -11,7 +11,7 @@ import Shows from './pages/shows/Shows.jsx'
 import Search from './pages/search/Search.jsx'
 import DetailsPage from './pages/DetailsPage.jsx'
 import { AuthProvider } from "./context/authProvider.jsx";
-import Watchlist from "./pages/WatchList.jsx";
+import Watchlist from "./pages/Watchlist.jsx";
 import Protected from "./components/routes/Protected.jsx";
 
 const router = createBrowserRouter([
