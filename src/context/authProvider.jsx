@@ -1,0 +1,37 @@
+import { createContext, useState, useEffect} from "react";
+import { auth } from "../services/firebase";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import PropTypes from "prop-types";
+
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+
+    function signInWithGoogle() {
+        const provider = new GoogleAuthProvider();
+        return signInWithPopup(auth, provider);
+    }
+
+    function logout() {
+        return signOut(auth);
+    }
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (currentUser) => {
+            currentUser ? setUser(currentUser): setUser(null);
+            setLoading(false);
+        });
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{ user, isLoading, signInWithGoogle, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+AuthProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
